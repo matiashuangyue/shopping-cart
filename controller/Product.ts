@@ -11,6 +11,25 @@ const productController ={
         }
     },
 
+    getProduct: async (req: Request, res: Response) => {
+        try
+        {
+            const BuscarUnProducto = await ProductModel.findOne({... req.params})
+            
+            //Sí el producto no existe la API mandará un HTTP STATUS NOT FOUND
+            if(BuscarUnProducto?.Name != undefined)
+            {
+                res.status(200).send(BuscarUnProducto)
+            }else{
+                res.status(404).send(`El producto escrito en los parametros no existe en la base de datos.`);
+            }
+        }
+        catch (error)
+        {
+            res.status(500).send(error)
+        }
+    },
+
     add:async(req:Request ,res:Response)=>{
         try 
         { //para agregar productos 
@@ -35,16 +54,16 @@ const productController ={
     },
 
     delete:async(req:Request ,res:Response)=>{
-        try {//borra con id de producto 
-            const id = req.params.id
+        try {//borra con nombre de producto 
+            const Name = req.params.Name
             const FindProduct = await ProductModel.findOne({... req.params})
-            if(FindProduct?.Id != undefined || FindProduct?.Id != null){
+            if(FindProduct?.Name != undefined || FindProduct?.Name != null){
                 const product = await ProductModel.findOneAndDelete({... req.params});
-                res.status(200).send(`Se elimino ${product?.Id} y sus respectivos valores de la base de datos.`);
+                res.status(200).send(`Se elimino ${product?.Name} y sus respectivos valores de la base de datos.`);
             }
             else
             {
-                res.status(404).send(`El producto ${req.params.Id} no existe en la base de datos .`)             
+                res.status(404).send(`El producto ${req.params.Name} no existe en la base de datos .`)             
             }
         } catch (error) {
             res.status(500).send(error)
