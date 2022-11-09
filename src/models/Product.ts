@@ -6,7 +6,7 @@ const SchemaProducts= new Schema({
     Description:{type:String,required:true},
     Cant:{type:Number,required:true},
     Price:{type:Number,required:true},
-    InCart:{type:Boolean,default:false}
+
 })
 
 const ProductModel = model("Product",SchemaProducts)

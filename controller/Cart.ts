@@ -1,20 +1,32 @@
-import { Console, info } from "console";
 import { Request, Response} from "express";
-import { type } from "os";
 import CartModel from "../src/models/Cart";
 import ProductModel from "../src/models/Product";
+
 
 const cartController ={
     get:async(req:Request,res:Response)=>{
         try{
             const ProducList=await CartModel.find()
-            res.status(200).send(ProducList)
+            if(ProducList){
+                res.status(200).send(ProducList)
+            }
+            else{
+                res.status(400).send("aun no existe carrito")
+            }
         }
         catch(error){
             res.status(500).send(error)
         }
 
     },
+
+
+    
+    
+}
+
+export default cartController
+/*,
 
     add: async (req: Request, res: Response) => {
         try
@@ -81,8 +93,6 @@ const cartController ={
         {
             res.status(500);
         }
-    }
+    }*/
 
-}
 
-export default cartController

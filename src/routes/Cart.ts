@@ -4,7 +4,5 @@ import cartController from "../../controller/Cart";
 const router = Router();
 
 router.get("/",cartController.get)
-router.post("/", cartController.add)
-router.delete("/:Name",cartController.delete)
 
 export default router
